@@ -15,7 +15,7 @@ class App extends React.Component {
  * sets the search query and location state attributes
  * @param {object} props - the properties object
  */
-  consturctor(props) {
+  constructor(props) {
     super(props);
     this.state= {
       searchQuery: '',
@@ -33,7 +33,7 @@ class App extends React.Component {
   getLocation = async () => {
     const API =`https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_TOKEN}&q=${this.state.searchQuery}&format=json`;
     const res = await axios.get(API);
-    this.setState({ location: res.data[[0] }); // 
+    this.setState({ location: res.data[0] });  
   };
 
 render() {
