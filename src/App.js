@@ -46,8 +46,9 @@ render() {
     />
     <button onClick={this.getlocation}>Explore!</button>
     {this.state.location.place_id && (
-      <h2>The city is: {this.state.location.display_name}</h2>
-    )}
+      <h2>The city is: {this.state.location.display_name} {this.state.location.latitude} {this.state.location.longitude}</h2>
+      //^^^^^correct long and lat place?
+    ) }
     </>
   );
 }
