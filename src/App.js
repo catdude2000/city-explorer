@@ -30,6 +30,7 @@ class App extends React.Component {
    * environment variable name must begin with REACT_APP_
    * Store the access token in .env
    */
+
   getLocation = async () => {
     const API =`https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_TOKEN}&q=${this.state.searchQuery}&format=json`;
     const res = await axios.get(API);
@@ -42,12 +43,13 @@ render() {
     <>
     <input
     onChange={(e) => this.setState({ searchQuery: e.target.value})}
-    placeholder='search for a city'
+    placeholder='Search for a city'
     />
-    <button onClick={this.getlocation}>Explore!</button>
+    <button onClick={this.getLocation}>Explore!</button>
     {this.state.location.place_id && (
-      <h2>The city is: {this.state.location.display_name} {this.state.location.latitude} {this.state.location.longitude}</h2>
-      //^^^^^correct long and lat place?
+      <h2>The city is: {this.state.location.display_name} 
+       longitude:{this.state.location.latitude} Latitude:{this.state.location.longitude}</h2>
+
     ) }
     </>
   );
