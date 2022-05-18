@@ -11,7 +11,9 @@ import axios from 'axios';
 class App extends React.Component {
 
   /**
-   * sets the search query and location state attributes
+   * sets the 'search query' and 'location' state attributes to null as default,
+   * because render() sees null as no value and won't render the components
+   *
    * @param {object} props - the properties object
    */
   constructor(props) {
@@ -29,16 +31,25 @@ class App extends React.Component {
     * environment variable name must begin with REACT_APP_
     * Store the access token in .env
     */
-
   getLocation = async () => {
+    // pulls the user input from the associated element id ("searchQ")
     let searchInput = document.getElementById("searchQ").value;
+
     const API = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_TOKEN}&q=${searchInput}&format=json`;
+
     const res = await axios.get(API);
 
-    let location = res.data[0];
-    this.setState({ location });
+    let incomingLocation = res.data[0];
+    this.setState({ location:incomingLocation });
   };
 
+
+  /**
+   * Added id to input and removed the onChange
+   * Changed this.state.location.latitude and this.state.location.longitude
+   * to this.state.location.lat and lon to match the data
+   * @returns {Component}
+   */
   render() {
     console.log(`Location: ${JSON.stringify(this.state.location)}`);
     return (
