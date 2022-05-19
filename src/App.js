@@ -6,7 +6,8 @@
 
 import React from 'react';
 import axios from 'axios';
-import { Image } from 'react-bootstrap';
+import { Button, Container, FormControl, Image } from 'react-bootstrap';
+import './App.css';
 
 
 class App extends React.Component {
@@ -57,19 +58,20 @@ class App extends React.Component {
     console.log(this.state.location.lat, 'incomloc');
     return (
       <>
-        <input
+      <FormControl
+        
           id="searchQ"
           placeholder='Search for a city'
         />
-        <button onClick={this.getLocation}>Explore!</button>
+        <Button onClick={this.getLocation}>Explore!</Button>
         {this.state.location.place_id && (
-          <h2>
+          <Container>
             The city is: {this.state.location.display_name}<br/>
             Longitude: {this.state.location.lat}<br/>
-            Latitude: {this.state.location.lon}
+            Latitude: {this.state.location.lon}<br/>
             <Image src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_TOKEN}&center=${this.state.location.lat},${this.state.location.lon}`} alt='map'/>
             
-          </h2>
+          </Container>
         )}
       </>
     );
