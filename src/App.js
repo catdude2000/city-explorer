@@ -6,6 +6,7 @@
 
 import React from 'react';
 import axios from 'axios';
+import { Image } from 'react-bootstrap';
 
 
 class App extends React.Component {
@@ -20,7 +21,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       searchQuery: null,
-      location: { place_id: null, display_name: null },
+      location: { place_id: null, display_name: null, lat: null, lon: null },
     };
   }
 
@@ -40,6 +41,7 @@ class App extends React.Component {
     const res = await axios.get(API);
 
     let incomingLocation = res.data[0];
+    // console.log(incomingLocation.lat, 'incomloc')
     this.setState({ location:incomingLocation });
   };
 
@@ -52,6 +54,7 @@ class App extends React.Component {
    */
   render() {
     console.log(`Location: ${JSON.stringify(this.state.location)}`);
+    console.log(this.state.location.lat, 'incomloc');
     return (
       <>
         <input
@@ -63,7 +66,10 @@ class App extends React.Component {
           <h2>
             The city is: {this.state.location.display_name}<br/>
             Longitude: {this.state.location.lat}<br/>
-            Latitude: {this.state.location.lon}</h2>
+            Latitude: {this.state.location.lon}
+            <Image src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_TOKEN}&center=${this.state.location.lat},${this.state.location.lon}`} alt='map'/>
+            
+          </h2>
         )}
       </>
     );
