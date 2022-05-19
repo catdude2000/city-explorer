@@ -8,7 +8,7 @@ import React from 'react';
 import axios from 'axios';
 import { Button, Container, FormControl, Image } from 'react-bootstrap';
 import './App.css';
-
+import Error from './Error';
 
 class App extends React.Component {
 
@@ -23,6 +23,7 @@ class App extends React.Component {
     this.state = {
       searchQuery: null,
       location: { place_id: null, display_name: null, lat: null, lon: null },
+      error: null
     };
   }
 
@@ -36,16 +37,24 @@ class App extends React.Component {
   getLocation = async () => {
     // pulls the user input from the associated element id ("searchQ")
     let searchInput = document.getElementById("searchQ").value;
-
+    console.log(`App.getLocation() searchInput ${searchInput}`)
+    if (searchInput.length === 0){
+      this.setState({error: '404 "error": "Unable to geocode"'});
+    }
+    else{
+ 
     const API = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_TOKEN}&q=${searchInput}&format=json`;
 
     const res = await axios.get(API);
 
     let incomingLocation = res.data[0];
     // console.log(incomingLocation.lat, 'incomloc')
-    this.setState({ location:incomingLocation });
+    this.setState({ location:incomingLocation, error: null });
+    // if (searchInput = null){
+    //   this.setState({ error:})
+    // }
+  }
   };
-
 
   /**
    * Added id to input and removed the onChange
@@ -54,12 +63,11 @@ class App extends React.Component {
    * @returns {Component}
    */
   render() {
-    console.log(`Location: ${JSON.stringify(this.state.location)}`);
-    console.log(this.state.location.lat, 'incomloc');
+    // console.log(`Location: ${JSON.stringify(this.state.location)}`);
+    // console.log(this.state.location.lat, 'incomloc');
     return (
       <>
       <FormControl
-        
           id="searchQ"
           placeholder='Search for a city'
         />
@@ -70,9 +78,10 @@ class App extends React.Component {
             Longitude: {this.state.location.lat}<br/>
             Latitude: {this.state.location.lon}<br/>
             <Image src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_TOKEN}&center=${this.state.location.lat},${this.state.location.lon}`} alt='map'/>
-            
+
           </Container>
         )}
+          {this.state.error&&<Error message={this.state.error}/>}
       </>
     );
   }
