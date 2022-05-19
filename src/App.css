@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  color: #61dafb;
+  background-color: #282c34;
+  text-align: center;
+  font-size: 28px;
+}
+button{
+  margin-top: 30px;
+  margin-bottom: 20px;
+  width: 100px;
+  height: 40px;
+}
