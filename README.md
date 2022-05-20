@@ -23,11 +23,11 @@ Name of feature: Lab 6
 
 Estimate of time needed to complete: 2.5 hours
 
-Start time: 10:40 AM
+Start time: 10:40 AM Wednesday
 
-Finish time: _____
+Finish time: 4:22 PM Thursday
 
-Actual time needed to complete: _____
+Actual time needed to complete: 7 hours
 
 Name of feature: ________________________________
 
