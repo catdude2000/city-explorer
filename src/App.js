@@ -55,9 +55,13 @@ class App extends React.Component {
           Pick a City:
           <input type="text" onInput={this.handleCityInput} />
         </label>
-        <button type="submit">Get City Data</button>
+        <button type="submit">Explore!</button>
       </form>
-
+        <div>
+        {this.state.cityData.display_name}
+        {this.state.cityData.lat}
+        {this.state.cityData.lon}
+        </div>
       </>
       );
   }
