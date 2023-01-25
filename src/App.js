@@ -22,10 +22,16 @@ class App extends React.Component {
     try{
       let url= `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${this.state.city}&format=json`;
 
+      // let mapUrl= `https://maps.locationiq.com/v3/staticmap/search?key=${API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=10`
+
       let cityInfo = await axios.get(url);
 
+      // let cityMap = await axios.get(mapUrl);
+
       this.setState({
+        
         cityData: cityInfo.data[0],
+        // cityImage: cityMap,
         error: false
       });
 
@@ -61,6 +67,9 @@ class App extends React.Component {
         {this.state.cityData.display_name}
         {this.state.cityData.lat}
         {this.state.cityData.lon}
+        </div>
+        <div>
+          {/* {this.state.cityMap} */}
         </div>
       </>
       );
