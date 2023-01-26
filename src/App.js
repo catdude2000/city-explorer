@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Image, Col } from 'react-bootstrap';
+import { Image, Col, Card } from 'react-bootstrap';
 
 let API_KEY = process.env.REACT_APP_LOC_APIKEY;
 
@@ -65,6 +65,7 @@ class App extends React.Component {
           </label>
           <button type="submit">Explore!</button>
         </form>
+        <Card>{this.state.errorMessage}</Card>
         <Col>
             {this.state.cityData.display_name}
             <br/>
