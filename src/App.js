@@ -2,38 +2,40 @@ import './App.css';
 import React from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css'
-// import { Form } from 'react-bootstrap';
+import { Image, Row, Col } from 'react-bootstrap';
+
 let API_KEY = process.env.REACT_APP_LOC_APIKEY;
 
 class App extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       city: "",
       cityData: {},
       error: false,
-      errorMessage: ""
+      errorMessage: "",
+      cityMap: ''
     };
   }
-
+  imageHandler = async () => {
+    this.setState({
+      cityMap: `https://maps.locationiq.com/v3/staticmap/search?key=${API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=10`
+    })
+  }
   submitCityHandler = async (event) => {
     event.preventDefault();
-    try{
-      let url= `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${this.state.city}&format=json`;
+    try {
+      let url = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${this.state.city}&format=json`;
 
-      // let mapUrl= `https://maps.locationiq.com/v3/staticmap/search?key=${API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=10`
-
-      let cityInfo = await axios.get(url);
-
-      // let cityMap = await axios.get(mapUrl);
+      let cityInfo = await axios.get(url);;
 
       this.setState({
-        
         cityData: cityInfo.data[0],
-        // cityImage: cityMap,
         error: false
-      });
+      },
+        this.imageHandler
+      );
 
     } catch (error) {
       this.setState({
@@ -55,24 +57,29 @@ class App extends React.Component {
     console.log("city", this.state.cityData);
     return (
       <>
-      <form id="form" onSubmit={this.submitCityHandler}>
-        <label>
-          {" "}
-          Pick a City:
-          <input type="text" onInput={this.handleCityInput} />
-        </label>
-        <button type="submit">Explore!</button>
-      </form>
-        <div>
-        {this.state.cityData.display_name}
-        {this.state.cityData.lat}
-        {this.state.cityData.lon}
-        </div>
-        <div>
-          {/* {this.state.cityMap} */}
-        </div>
+        <form id="form" onSubmit={this.submitCityHandler}>
+          <label>
+            {" "}<p>
+              Pick a City:
+            </p>
+            <input type="text" onInput={this.handleCityInput} />
+          </label>
+          <button type="submit">Explore!</button>
+        </form>
+        <Col>
+          <Row>
+            {this.state.cityData.display_name}
+          </Row>
+          <Row>
+            {this.state.cityData.lat}
+          </Row>
+          <Row>
+            {this.state.cityData.lon}
+          </Row>
+        </Col>
+        <Image src={this.state.cityMap} />
       </>
-      );
+    );
   }
 }
 export default App;
