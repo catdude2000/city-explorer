@@ -5,6 +5,8 @@ form {
 input {
   padding: 15px;
   margin-left: 20px;
+  text-align: center;
+  background-color: yellow;
 }
 button{
   background-color: forestgreen;
@@ -15,8 +17,12 @@ p {
   font-weight: 500;
   font-size: larger;
   color: blue;
+  background-color: aqua;
 }
 div {
+  /* background-color: aqua; */
   text-align: center;
-  /* margin-left: 50%; */
+};
+Col {
+  font-size: x-large;
 }

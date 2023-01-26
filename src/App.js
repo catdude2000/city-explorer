@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Image, Row, Col } from 'react-bootstrap';
+import { Image, Col } from 'react-bootstrap';
 
 let API_KEY = process.env.REACT_APP_LOC_APIKEY;
 
@@ -39,7 +39,6 @@ class App extends React.Component {
 
     } catch (error) {
       this.setState({
-
         error: true,
         errorMessage: `An error ocurred: ${error.response.status}`
       });
@@ -56,7 +55,7 @@ class App extends React.Component {
 
     console.log("city", this.state.cityData);
     return (
-      <>
+      <body>
         <form id="form" onSubmit={this.submitCityHandler}>
           <label>
             {" "}<p>
@@ -67,18 +66,13 @@ class App extends React.Component {
           <button type="submit">Explore!</button>
         </form>
         <Col>
-          <Row>
             {this.state.cityData.display_name}
-          </Row>
-          <Row>
+            <br/>
             {this.state.cityData.lat}
-          </Row>
-          <Row>
             {this.state.cityData.lon}
-          </Row>
         </Col>
         <Image src={this.state.cityMap} />
-      </>
+      </body>
     );
   }
 }
