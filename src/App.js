@@ -51,6 +51,25 @@ class App extends React.Component {
     });
   };
 
+
+
+
+  ///////////////
+
+  // displayWeather = async (lat, lon, searchQuery) => {
+  //   try {
+  //     const weatherUrl = '${process.env./weather', {
+  //       params: {latitude: lat, longitude: lon, searchQuery: this.state.city}
+  //     }
+  //     let weather = await axios.get(weatherUrl);
+  //   }
+  // }
+
+///////////////////////////
+
+
+
+
   render() {
 
     console.log("city", this.state.cityData);
