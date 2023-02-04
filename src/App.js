@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Image, Col, Card } from 'react-bootstrap';
 
 let API_KEY = process.env.REACT_APP_LOC_APIKEY;
@@ -15,20 +15,23 @@ class App extends React.Component {
       cityData: {},
       error: false,
       errorMessage: "",
-      cityMap: ''
+      cityMap: '',
+      lat: "",
+      lon: ""
     };
   }
+
   imageHandler = async () => {
     this.setState({
       cityMap: `https://maps.locationiq.com/v3/staticmap/search?key=${API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=10`
     })
   }
+
   submitCityHandler = async (event) => {
     event.preventDefault();
     try {
-      let url = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${this.state.city}&format=json`;
-
-      let cityInfo = await axios.get(url);;
+      let url = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${this.state.city}&format=json`
+      let cityInfo = await axios.get(url)
 
       this.setState({
         cityData: cityInfo.data[0],
@@ -36,7 +39,6 @@ class App extends React.Component {
       },
         this.imageHandler
       );
-
     } catch (error) {
       this.setState({
         error: true,
@@ -53,22 +55,23 @@ class App extends React.Component {
 
   ///////////////
 
-  displayWeather = async (lat, lon, searchQuery) => {
-    try {
-      let weatherUrl = await axios.get(`${process.env.REACT_APP_SERVER}/weather`)  
-        this.setState({
-          latitude: lat, 
-          longitude: lon, 
-          searchQuery: this.state.city
-      })
-      let weather = await axios.get(weatherUrl);
-    } catch (error) {
-      this.setState({
-        error: true,
-        errorMessage: `An error ocurred: ${error.response.status}`
-      });
-    };
-  };
+  // displayWeather = async (lat, lon, searchQuery) => {
+  //   try {
+  //     let weatherUrl = await axios.get(`${process.env.REACT_APP_SERVER}/weather`)  
+  //       this.setState({
+  //         latitude: lat, 
+  //         longitude: lon, 
+  //         searchQuery: searchQuery,
+  //         weather: await axios.get(weatherUrl)
+  //     })
+      
+  //   } catch (error) {
+  //     this.setState({
+  //       error: true,
+  //       errorMessage: `An error ocurred: ${error.response.status}`
+  //     })
+  //   }
+  // };
 
 ///////////////////////////
 
@@ -89,6 +92,7 @@ class App extends React.Component {
         </form>
         <Card>{this.state.errorMessage}</Card>
         <Col>
+            {/* {this.weather} */}
             {this.state.cityData.display_name}
             <br/>
             {this.state.cityData.lat}
