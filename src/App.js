@@ -37,7 +37,8 @@ class App extends React.Component {
         cityData: cityInfo.data[0],
         error: false
       },
-        this.imageHandler
+        this.imageHandler(),
+        this.displayWeather()
       );
     } catch (error) {
       this.setState({
@@ -55,30 +56,31 @@ class App extends React.Component {
 
   ///////////////
 
-  // displayWeather = async (lat, lon, searchQuery) => {
-  //   try {
-  //     let weatherUrl = await axios.get(`${process.env.REACT_APP_SERVER}/weather`)  
-  //       this.setState({
-  //         latitude: lat, 
-  //         longitude: lon, 
-  //         searchQuery: searchQuery,
-  //         weather: await axios.get(weatherUrl)
-  //     })
+  displayWeather = async (lat, lon, searchQuery) => {
+    try {
+      console.log(lat, lon)
+      let weatherUrl = await axios.get(`${process.env.REACT_APP_SERVER}/weather`)  
+        this.setState({
+          latitude: lat,
+          longitude: lon,
+          searchQuery: searchQuery,
+          weather: await axios.get(weatherUrl)
+      })
       
-  //   } catch (error) {
-  //     this.setState({
-  //       error: true,
-  //       errorMessage: `An error ocurred: ${error.response.status}`
-  //     })
-  //   }
-  // };
+    } catch (error) {
+      this.setState({
+        error: true,
+        errorMessage: `An error ocurred: ${error.response.status}`
+      })
+    }
+  };
 
 ///////////////////////////
 
 
   render() {
 
-    console.log("city", this.state.cityData);
+    // console.log("city", this.state.cityData);
     return (
       <body>
         <form id="form" onSubmit={this.submitCityHandler}>
