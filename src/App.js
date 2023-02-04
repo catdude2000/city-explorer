@@ -21,25 +21,24 @@ class App extends React.Component {
     };
   }
 
-  imageHandler = async () => {
-    this.setState({
-      cityMap: `https://maps.locationiq.com/v3/staticmap/search?key=${API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=10`
-    })
-  }
+
 
   submitCityHandler = async (event) => {
     event.preventDefault();
     try {
       let url = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${this.state.city}&format=json`
-      let cityInfo = await axios.get(url)
+      let cityInfo = await axios.get(url);
 
       this.setState({
         cityData: cityInfo.data[0],
-        error: false
-      },
-        this.imageHandler(),
-        this.displayWeather()
+        error: false,
+        cityMap: `https://maps.locationiq.com/v3/staticmap/search?key=${API_KEY}&center=${cityInfo.data[0].lat},${cityInfo.data[0].lon}&zoom=10`
+        
+      }
       );
+
+        this.displayWeather(cityInfo.data[0].lat, cityInfo.data[0].lon, this.state.city);
+      
     } catch (error) {
       this.setState({
         error: true,
@@ -56,16 +55,18 @@ class App extends React.Component {
 
   ///////////////
 
-  displayWeather = async (lat, lon, searchQuery) => {
+  displayWeather = async (lat, lon, city) => {
     try {
-      console.log(lat, lon)
-      let weatherUrl = await axios.get(`${process.env.REACT_APP_SERVER}/weather`)  
-        this.setState({
-          latitude: lat,
-          longitude: lon,
-          searchQuery: searchQuery,
-          weather: await axios.get(weatherUrl)
-      })
+      // console.log(lat, lon,city)
+
+      let weatherUrl = await axios.get(`${process.env.REACT_APP_SERVER}/weather/?searchQuery=${city}&lat=${lat}&lon=${lon}`); 
+      console.log(weatherUrl);
+      //   this.setState({
+      //     // latitude: lat,
+      //     // longitude: lon,
+      //     // searchQuery: searchQuery,
+      //     // weather: await axios.get(weatherUrl)
+      // })
       
     } catch (error) {
       this.setState({
@@ -82,7 +83,7 @@ class App extends React.Component {
 
     // console.log("city", this.state.cityData);
     return (
-      <body>
+      <>
         <form id="form" onSubmit={this.submitCityHandler}>
           <label>
             {" "}<p>
@@ -94,14 +95,13 @@ class App extends React.Component {
         </form>
         <Card>{this.state.errorMessage}</Card>
         <Col>
-            {/* {this.weather} */}
             {this.state.cityData.display_name}
             <br/>
             {this.state.cityData.lat}
             {this.state.cityData.lon}
         </Col>
         <Image src={this.state.cityMap} />
-      </body>
+      </>
     );
   }
 }
