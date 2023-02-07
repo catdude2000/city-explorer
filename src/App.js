@@ -16,10 +16,11 @@ class App extends React.Component {
       cityData: {},
       error: false,
       errorMessage: "",
-      cityMap: '',
+      cityMap: "",
       lat: "",
       lon: "",
-      weatherShown: []
+      weatherShown: {},
+      showWeather: false
     };
   }
 
@@ -30,17 +31,13 @@ class App extends React.Component {
     try {
       let url = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${this.state.city}&format=json`
       let cityInfo = await axios.get(url);
-
       this.setState({
         cityData: cityInfo.data[0],
         error: false,
         cityMap: `https://maps.locationiq.com/v3/staticmap/search?key=${API_KEY}&center=${cityInfo.data[0].lat},${cityInfo.data[0].lon}&zoom=10`
-        
       }
       );
-
         this.displayWeather(cityInfo.data[0].lat, cityInfo.data[0].lon, this.state.city);
-      
     } catch (error) {
       this.setState({
         error: true,
@@ -61,13 +58,12 @@ class App extends React.Component {
     try {
 
       let weatherUrl = await axios.get(`${process.env.REACT_APP_SERVER}/weather/?searchQuery=${city}&lat=${lat}&lon=${lon}`); 
-      console.log(weatherUrl);
-      //   this.setState({
-      //     // latitude: lat,
-      //     // longitude: lon,
-      //     // searchQuery: searchQuery,
-      //     // weather: await axios.get(weatherUrl)
-      // })
+      console.log(weatherUrl.data, 'weatherurl');
+        this.setState({
+          showWeather: true,
+          weatherShown: weatherUrl
+      })
+
       
     } catch (error) {
       this.setState({
@@ -102,10 +98,16 @@ class App extends React.Component {
             {this.state.cityData.lon}
         </Col>
         <Image src={this.state.cityMap} />
-        <Weather
-        date={this.state.date}
+        {/* {this.props.weatherShownForRender.map((datetime, description) => ( */}
+          <Weather
+          weatherShown={this.state.weatherShown}
+          date={this.state.datetime}
+          description={this.state.description}
+          displayWeather={this.displayWeather}
+          />
+{/* ))
+} */}
         
-        />
       </>
     );
   }
