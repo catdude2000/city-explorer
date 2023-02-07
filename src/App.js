@@ -1,8 +1,9 @@
 import './App.css';
 import React from 'react';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Image, Col, Card } from 'react-bootstrap';
+import Weather from './Weather';
 
 let API_KEY = process.env.REACT_APP_LOC_APIKEY;
 
@@ -15,28 +16,26 @@ class App extends React.Component {
       cityData: {},
       error: false,
       errorMessage: "",
-      cityMap: ''
+      cityMap: "",
+      lat: "",
+      lon: "",
+      weatherShown: '',
+      showWeather: false
     };
   }
-  imageHandler = async () => {
-    this.setState({
-      cityMap: `https://maps.locationiq.com/v3/staticmap/search?key=${API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=10`
-    })
-  }
+
   submitCityHandler = async (event) => {
     event.preventDefault();
     try {
-      let url = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${this.state.city}&format=json`;
-
-      let cityInfo = await axios.get(url);;
-
+      let url = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${this.state.city}&format=json`
+      let cityInfo = await axios.get(url);
       this.setState({
         cityData: cityInfo.data[0],
-        error: false
-      },
-        this.imageHandler
+        error: false,
+        cityMap: `https://maps.locationiq.com/v3/staticmap/search?key=${API_KEY}&center=${cityInfo.data[0].lat},${cityInfo.data[0].lon}&zoom=10`
+      }
       );
-
+        this.displayWeather(cityInfo.data[0].lat, cityInfo.data[0].lon, this.state.city);
     } catch (error) {
       this.setState({
         error: true,
@@ -51,11 +50,28 @@ class App extends React.Component {
     });
   };
 
+  displayWeather = async (lat, lon, city) => {
+    try {
+
+      let weatherUrl = await axios.get(`${process.env.REACT_APP_SERVER}/weather/?searchQuery=${city}&lat=${lat}&lon=${lon}`); 
+      console.log(weatherUrl.data, 'weatherurl');
+        this.setState({
+          showWeather: true,
+          weatherShown: weatherUrl.data
+      })
+    } catch (error) {
+      this.setState({
+        error: true,
+        errorMessage: `An error ocurred: ${error.response.status}`
+      })
+    }
+  };
+
   render() {
 
-    console.log("city", this.state.cityData);
+    console.log("city", this.state.weatherShown);
     return (
-      <body>
+      <>
         <form id="form" onSubmit={this.submitCityHandler}>
           <label>
             {" "}<p>
@@ -73,7 +89,11 @@ class App extends React.Component {
             {this.state.cityData.lon}
         </Col>
         <Image src={this.state.cityMap} />
-      </body>
+       {this.state.weatherShown && <Weather
+          weatherShown={this.state.weatherShown}
+          /> 
+        }   
+      </>
     );
   }
 }
