@@ -6,12 +6,8 @@ class Weather extends React.Component {
         super(props);
         this.state = {
             weatherShownForRender: this.props.weatherShown,
-            // date: this.props.date,
-            // description: this.props.description
         };
     }
-
-
     render() {
         console.log(this.state.weatherShownForRender, 'weathershown inwjs')
             let shownWeather = (this.state.weatherShownForRender).map((forecast, index) => {

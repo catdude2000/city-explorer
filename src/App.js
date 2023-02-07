@@ -24,7 +24,6 @@ class App extends React.Component {
     };
   }
 
-
   submitCityHandler = async (event) => {
     event.preventDefault();
     try {
@@ -68,7 +67,6 @@ class App extends React.Component {
     }
   };
 
-
   render() {
 
     console.log("city", this.state.weatherShown);
@@ -91,20 +89,10 @@ class App extends React.Component {
             {this.state.cityData.lon}
         </Col>
         <Image src={this.state.cityMap} />
-
-
-        {/* {this.state.weatherShown.map((datetime, description) => ( */}
-       
        {this.state.weatherShown && <Weather
           weatherShown={this.state.weatherShown}
-          // date={yhis.state.datetime}
-          // description={description}
-          /> }   
-{/* ))
-} */}
-        
-
-
+          /> 
+        }   
       </>
     );
   }
