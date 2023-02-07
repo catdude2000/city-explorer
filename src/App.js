@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Image, Col, Card } from 'react-bootstrap';
+import Weather from './Weather';
 
 let API_KEY = process.env.REACT_APP_LOC_APIKEY;
 
@@ -17,7 +18,8 @@ class App extends React.Component {
       errorMessage: "",
       cityMap: '',
       lat: "",
-      lon: ""
+      lon: "",
+      weatherShown: []
     };
   }
 
@@ -57,7 +59,6 @@ class App extends React.Component {
 
   displayWeather = async (lat, lon, city) => {
     try {
-      // console.log(lat, lon,city)
 
       let weatherUrl = await axios.get(`${process.env.REACT_APP_SERVER}/weather/?searchQuery=${city}&lat=${lat}&lon=${lon}`); 
       console.log(weatherUrl);
@@ -101,6 +102,10 @@ class App extends React.Component {
             {this.state.cityData.lon}
         </Col>
         <Image src={this.state.cityMap} />
+        <Weather
+        date={this.state.date}
+        
+        />
       </>
     );
   }
