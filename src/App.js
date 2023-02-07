@@ -53,7 +53,7 @@ class App extends React.Component {
   displayWeather = async (lat, lon, city) => {
     try {
 
-      let weatherUrl = await axios.get(`${process.env.REACT_APP_SERVER}/weather/?searchQuery=${city}&lat=${lat}&lon=${lon}`); 
+      let weatherUrl = await axios.get(`http://api.weatherbit.io/v2.0/current?&lat=${lat}&lon=${lon}&key=WEATHER_API_KEY`); 
       console.log(weatherUrl.data, 'weatherurl');
         this.setState({
           showWeather: true,
