@@ -19,11 +19,10 @@ class App extends React.Component {
       cityMap: "",
       lat: "",
       lon: "",
-      weatherShown: {},
+      weatherShown: '',
       showWeather: false
     };
   }
-
 
 
   submitCityHandler = async (event) => {
@@ -52,8 +51,6 @@ class App extends React.Component {
     });
   };
 
-  ///////////////
-
   displayWeather = async (lat, lon, city) => {
     try {
 
@@ -61,10 +58,8 @@ class App extends React.Component {
       console.log(weatherUrl.data, 'weatherurl');
         this.setState({
           showWeather: true,
-          weatherShown: weatherUrl
+          weatherShown: weatherUrl.data
       })
-
-      
     } catch (error) {
       this.setState({
         error: true,
@@ -73,12 +68,10 @@ class App extends React.Component {
     }
   };
 
-///////////////////////////
-
 
   render() {
 
-    // console.log("city", this.state.cityData);
+    console.log("city", this.state.weatherShown);
     return (
       <>
         <form id="form" onSubmit={this.submitCityHandler}>
@@ -98,16 +91,20 @@ class App extends React.Component {
             {this.state.cityData.lon}
         </Col>
         <Image src={this.state.cityMap} />
-        {/* {this.props.weatherShownForRender.map((datetime, description) => ( */}
-          <Weather
+
+
+        {/* {this.state.weatherShown.map((datetime, description) => ( */}
+       
+       {this.state.weatherShown && <Weather
           weatherShown={this.state.weatherShown}
-          date={this.state.datetime}
-          description={this.state.description}
-          displayWeather={this.displayWeather}
-          />
+          // date={yhis.state.datetime}
+          // description={description}
+          /> }   
 {/* ))
 } */}
         
+
+
       </>
     );
   }

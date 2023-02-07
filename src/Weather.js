@@ -5,24 +5,22 @@ class Weather extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            weatherShownForRender: this.props.weatherShown
+            weatherShownForRender: this.props.weatherShown,
+            // date: this.props.date,
+            // description: this.props.description
         };
     }
-    // helpShowWeather = () => {
-    //     this.props.displayWeather(this.props.weatherShown)
-    //     console.log(this.weatherShown, 'helpweatherfuncworking')
-    // }
+
 
     render() {
+        console.log(this.state.weatherShownForRender, 'weathershown inwjs')
+            let shownWeather = (this.state.weatherShownForRender).map((forecast, index) => {
+                return <li key={index}> Forecast:{forecast.description} | Date: {forecast.date}</li>
+            });
         return (
             <>
                 <Col>
-
-                    <p>date{this.props.date}
-                    <br/>
-                    description{this.props.description}
-                    </p>
-                    {/* <p>{this.props.description}</p> */}
+                    {shownWeather}
                 </Col>
             </>
         )
