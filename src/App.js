@@ -6,6 +6,7 @@ import { Image, Col, Card } from 'react-bootstrap';
 import Weather from './Weather';
 
 let API_KEY = process.env.REACT_APP_LOC_APIKEY;
+let W_API_KEY = process.env.WEATHER_API_KEY;
 
 class App extends React.Component {
 
@@ -52,8 +53,8 @@ class App extends React.Component {
 
   displayWeather = async (lat, lon, city) => {
     try {
-
-      let weatherUrl = await axios.get(`http://api.weatherbit.io/v2.0/current?&lat=${lat}&lon=${lon}&key=WEATHER_API_KEY`); 
+      http://api.weatherbit.io/v2.0/current?lat=42&lon=42&key=
+      let weatherUrl = await axios.get(`http://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lon}&key=${W_API_KEY}`); 
       console.log(weatherUrl.data, 'weatherurl');
         this.setState({
           showWeather: true,
