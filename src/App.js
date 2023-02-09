@@ -69,7 +69,6 @@ class App extends React.Component {
 
   render() {
 
-    console.log("city", this.state.weatherShown);
     return (
       <>
         <form id="form" onSubmit={this.submitCityHandler}>
