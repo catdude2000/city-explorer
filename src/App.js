@@ -37,6 +37,7 @@ class App extends React.Component {
       }
       );
         this.displayWeather(cityInfo.data[0].lat, cityInfo.data[0].lon, this.state.city);
+        console.log(this.state.weatherShown, 'weathershown')
     } catch (error) {
       this.setState({
         error: true,
@@ -53,7 +54,7 @@ class App extends React.Component {
 
   displayWeather = async (lat, lon, city) => {
     try {
-      let weatherUrl = await axios.get(`http://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lon}&key=${W_API_KEY}`); 
+      let weatherUrl = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${W_API_KEY}`); 
       console.log(weatherUrl.data, 'weatherurl');
         this.setState({
           showWeather: true,
