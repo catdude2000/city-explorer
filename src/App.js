@@ -6,6 +6,7 @@ import { Image, Col, Card } from 'react-bootstrap';
 import Weather from './Weather';
 
 let API_KEY = process.env.REACT_APP_LOC_APIKEY;
+let W_API_KEY = process.env.WEATHER_API_KEY;
 
 class App extends React.Component {
 
@@ -36,6 +37,7 @@ class App extends React.Component {
       }
       );
         this.displayWeather(cityInfo.data[0].lat, cityInfo.data[0].lon, this.state.city);
+        console.log(this.state.weatherShown, 'weathershown')
     } catch (error) {
       this.setState({
         error: true,
@@ -52,8 +54,7 @@ class App extends React.Component {
 
   displayWeather = async (lat, lon, city) => {
     try {
-
-      let weatherUrl = await axios.get(`${process.env.REACT_APP_SERVER}/weather/?searchQuery=${city}&lat=${lat}&lon=${lon}`); 
+      let weatherUrl = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${W_API_KEY}`); 
       console.log(weatherUrl.data, 'weatherurl');
         this.setState({
           showWeather: true,
@@ -69,7 +70,6 @@ class App extends React.Component {
 
   render() {
 
-    console.log("city", this.state.weatherShown);
     return (
       <>
         <form id="form" onSubmit={this.submitCityHandler}>
