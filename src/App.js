@@ -71,6 +71,25 @@ class App extends React.Component {
     }
   };
 
+  getMovies = async (event) => {
+    event.preventDefault();
+    try {
+      let movieResults = await axios.get(`${process.env.REACT_APP_SERVER}/weather?city=${this.state.city}`); 
+      console.log(movieResults.data, 'weatherurl');
+        this.setState({
+          moviesShown: movieResults.data,
+          showWeather: true,
+          
+      })
+    } catch (error) {
+      this.setState({
+        error: true,
+        errorMessage: `An error ocurred: ${error.response.status}`
+      })
+    }
+  };
+
+
   render() {
 
     return (
@@ -92,7 +111,7 @@ class App extends React.Component {
             {this.state.cityData.lon}
         </Col>
         <Image src={this.state.cityMap} />
-       {this.state.weatherShown && <Weather
+       {this.state.showWeather && <Weather
           weatherShown={this.state.weatherShown}
           /> 
         }   

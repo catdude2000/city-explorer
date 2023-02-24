@@ -11,7 +11,7 @@ class Weather extends React.Component {
     render() {
         console.log(this.state.weatherShownForRender, 'weathershown inwjs')
             let shownWeather = (this.state.weatherShownForRender).map((forecast, index) => {
-                return <li key={index}> Forecast:{forecast.description} | Date: {forecast.date}</li>
+                return <li key={index}> Forecast:{forecast.coord} | Date: {forecast.date}</li>
             });
         return (
             <>
