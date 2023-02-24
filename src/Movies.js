@@ -1,4 +1,5 @@
 import React from 'react';
+import { Col } from 'react-bootstrap';
 
 class Movies extends React.Component {
     constructor(props) {
@@ -9,9 +10,15 @@ class Movies extends React.Component {
     }
     render() {
         let shownMovies = (this.state.moviesShownForRender).map((movie, index) => {
-            return <img src=
+            return <li key={index}>
+                title: {movie.original_title} | description: {movie.overview}
+            </li>
         });
-        return <div>{shownMovies}</div>
+        return(
+         <>
+        <Col>{shownMovies}</Col>
+        </>
+        )
     }
 }
 

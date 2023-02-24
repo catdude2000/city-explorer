@@ -4,6 +4,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Image, Col, Card } from 'react-bootstrap';
 import Weather from './Weather';
+// import Movies from './Movies';
 
 let API_KEY = process.env.REACT_APP_LOC_APIKEY;
 // let W_API_KEY = process.env.WEATHER_API_KEY;
@@ -21,7 +22,9 @@ class App extends React.Component {
       lat: "",
       lon: "",
       weatherShown: '',
-      showWeather: false
+      showWeather: false,
+      movies: [],
+      showMovies: false
     };
   }
 
@@ -37,6 +40,7 @@ class App extends React.Component {
       }
       );
         this.getWeather();
+        this.getMovies();
         // (cityInfo.data[0].lat, cityInfo.data[0].lon, this.state.city);
         console.log(this.state.weatherShown, 'weathershown')
     } catch (error) {
@@ -72,13 +76,13 @@ class App extends React.Component {
   };
 
   getMovies = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     try {
-      let movieResults = await axios.get(`${process.env.REACT_APP_SERVER}/weather?city=${this.state.city}`); 
-      console.log(movieResults.data, 'weatherurl');
+      let movieResults = await axios.get(`${process.env.REACT_APP_SERVER}/movies?city=${this.state.city}`); 
+      console.log(movieResults.data, 'movieresultsdata');
         this.setState({
           moviesShown: movieResults.data,
-          showWeather: true,
+          showMovies: true,
           
       })
     } catch (error) {
@@ -111,6 +115,9 @@ class App extends React.Component {
             {this.state.cityData.lon}
         </Col>
         <Image src={this.state.cityMap} />
+        {/* <Movies
+        moviesShown={this.state.moviesShown}
+        /> */}
        {this.state.showWeather && <Weather
           weatherShown={this.state.weatherShown}
           /> 
